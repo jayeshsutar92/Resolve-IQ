@@ -21,6 +21,14 @@ export interface Complaint {
   issue_description?: string;
   product_or_service?: string;
   date_of_incident?: string;
+  product_strength?: string;
+  batch_number?: string;
+  manufacturing_date?: string;
+  expiry_date?: string;
+  quantity_affected?: string;
+  complaint_date?: string;
+  complaint_type?: string;
+  complaint_source?: string;
   additional_details?: Record<string, any>;
   original_text?: string;
   created_at: string;
