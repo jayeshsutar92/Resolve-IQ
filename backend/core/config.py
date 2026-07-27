@@ -20,7 +20,7 @@ class Settings(BaseSettings):
     
     # LLM (Groq)
     groq_api_key: str = Field(..., description="API key for Groq")
-    groq_model_name: str = Field(default="gemma2-9b-it", description="Groq model to use")
+    groq_model_name: str = Field(default="llama-3.1-8b-instant", description="Groq model to use")
     
     model_config = SettingsConfigDict(env_file=".env", env_file_encoding="utf-8", extra="ignore")
 

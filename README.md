@@ -17,7 +17,7 @@ The AI-Powered Complaint Management System is an end-to-end full-stack applicati
 - **PostgreSQL & SQLAlchemy 2.0 (asyncpg)**: Relational database and ORM
 - **Alembic**: Database migrations
 - **LangGraph & LangChain**: AI Workflow orchestration
-- **Groq API (gemma2-9b-it)**: Large Language Model for processing
+- **Groq API (llama-3.1-8b-instant)**: Large Language Model for processing
 
 ## Folder Structure
 ```
@@ -63,7 +63,7 @@ AIVOA-task/
 ```env
 DATABASE_URL=postgresql+asyncpg://postgres:password@localhost:5432/aivoa
 GROQ_API_KEY=your_groq_api_key_here
-GROQ_MODEL_NAME=gemma2-9b-it
+GROQ_MODEL_NAME=llama-3.1-8b-instant
 APP_NAME="AI Complaint Management API"
 APP_VERSION="1.0.0"
 DEBUG=True

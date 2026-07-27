@@ -15,7 +15,7 @@ AI COMPLAINT MANAGEMENT BACKEND - SELF AUDIT REPORT
   * models/ (UUID primary keys, timestamps, Complaint & RiskAssessment models)
   * schemas/ (Strict Pydantic v2 validation models for inputs, outputs, & LLM structures)
   * repositories/ (Async ComplaintRepository handling DB CRUD operations)
-  * ai/ (Groq client configured for gemma2-9b-it)
+  * ai/ (Groq client configured for llama-3.1-8b-instant)
   * ai/langgraph/ (LangGraph state orchestration with modular async nodes)
     - Intent Detection node
     - Complaint Extraction node
