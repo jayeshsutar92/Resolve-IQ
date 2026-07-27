@@ -47,7 +47,7 @@ class WorkflowService:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Complaint not found")
             initial_state["current_complaint_record"] = record
 
-        # Run LangGraph workflow (includes Intent, Extraction/Editing, Risk Assessment, DB Save)
+        # Run LangGraph workflow
         final_state = await complaint_graph.ainvoke(initial_state)
 
         if final_state.get("error"):
@@ -86,7 +86,7 @@ class WorkflowService:
 
     def _format_response(self, state: WorkflowState) -> dict:
         """
-        Formats the API response payload using the processed state and saved database record.
+        Formats the API response payload with a comprehensive summary message.
         """
         intent = state.get("intent")
         saved_record = state.get("saved_complaint")
@@ -97,9 +97,43 @@ class WorkflowService:
                 detail="Failed to retrieve saved complaint record."
             )
 
-        response_msg = "Complaint logged successfully." if intent != "edit" else "Complaint updated successfully."
-        if intent == "upload":
-            response_msg = "Document processed successfully."
+        # Build detailed informative AI message
+        summary_lines = []
+        if intent == "edit":
+            summary_lines.append("I have updated the complaint with your specified changes:")
+        elif intent == "upload":
+            summary_lines.append("I have extracted the following complaint details from the uploaded document:")
+        else:
+            summary_lines.append("I have logged your complaint and extracted the following information:")
+
+        fields_summary = []
+        if saved_record.customer_name:
+            fields_summary.append(f"• Customer: {saved_record.customer_name}")
+        if saved_record.product_or_service:
+            prod_str = saved_record.product_or_service
+            if saved_record.product_strength:
+                prod_str += f" ({saved_record.product_strength})"
+            fields_summary.append(f"• Product: {prod_str}")
+        if saved_record.batch_number:
+            fields_summary.append(f"• Batch Number: {saved_record.batch_number}")
+        if saved_record.date_of_incident:
+            fields_summary.append(f"• Date of Incident: {saved_record.date_of_incident}")
+        if saved_record.issue_description:
+            desc = saved_record.issue_description
+            if len(desc) > 100:
+                desc = desc[:97] + "..."
+            fields_summary.append(f"• Issue: {desc}")
+        if saved_record.complaint_type:
+            fields_summary.append(f"• Category: {saved_record.complaint_type}")
+
+        if fields_summary:
+            summary_lines.extend(fields_summary)
+
+        if saved_record.risk_assessment:
+            ra = saved_record.risk_assessment
+            summary_lines.append(f"\nAI Risk Assessment: {ra.severity} Severity | Priority: {ra.priority} | Level: {ra.risk_level}")
+
+        response_msg = "\n".join(summary_lines)
 
         return {
             "status": "success",
