@@ -22,9 +22,22 @@ async def extraction_node(state: WorkflowState) -> WorkflowState:
         return state
         
     prompt = PromptTemplate.from_template(
-        "You are an expert at extracting structured information from customer complaints.\n"
-        "Extract the following fields if present: customer_name, issue_description, product_or_service, date_of_incident.\n"
-        "If a field is not mentioned, leave it null.\n\n"
+        "You are an expert pharmaceutical and quality assurance AI assistant.\n"
+        "Extract structured complaint information from the customer's input.\n"
+        "Fields to extract if present:\n"
+        "- customer_name\n"
+        "- issue_description\n"
+        "- product_or_service\n"
+        "- date_of_incident\n"
+        "- product_strength\n"
+        "- batch_number\n"
+        "- manufacturing_date\n"
+        "- expiry_date\n"
+        "- quantity_affected\n"
+        "- complaint_date\n"
+        "- complaint_type\n"
+        "- complaint_source\n"
+        "Leave fields as null if they are not explicitly mentioned in the text.\n\n"
         "Complaint text:\n{message}"
     )
     

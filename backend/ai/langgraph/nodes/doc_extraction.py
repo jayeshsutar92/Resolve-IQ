@@ -22,9 +22,21 @@ async def doc_extraction_node(state: WorkflowState) -> WorkflowState:
         return state
         
     prompt = PromptTemplate.from_template(
-        "You are an expert at extracting structured information from formal documents.\n"
-        "Extract the following fields representing a customer complaint: customer_name, issue_description, product_or_service, date_of_incident.\n"
-        "If a field is not present, leave it null.\n\n"
+        "You are an expert pharmaceutical compliance officer.\n"
+        "Extract structured complaint fields from the following formal document:\n"
+        "- customer_name (reporter or patient name)\n"
+        "- issue_description (detailed issue description)\n"
+        "- product_or_service (drug/product name)\n"
+        "- date_of_incident (incident date)\n"
+        "- product_strength (e.g., 500mg, 10mg/ml)\n"
+        "- batch_number (lot or batch ID)\n"
+        "- manufacturing_date\n"
+        "- expiry_date\n"
+        "- quantity_affected\n"
+        "- complaint_date\n"
+        "- complaint_type (e.g., Packaging Defect, Adverse Event, Product Quality)\n"
+        "- complaint_source (e.g., Hospital, Retail Pharmacy, Consumer)\n"
+        "Leave fields as null if not found in the document.\n\n"
         "DOCUMENT TEXT:\n{text}"
     )
     
