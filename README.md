@@ -74,6 +74,8 @@ DEBUG=True
 VITE_API_BASE_URL=http://localhost:8000
 ```
 
+> **Note on Model Selection**: The assignment specified `gemma2-9b-it` via Groq. Since that model has been decommissioned, the implementation uses a currently supported Groq model (`llama-3.1-8b-instant`) while preserving the same architecture and workflow.
+
 ### Running the Backend
 1. Navigate to the `backend/` directory.
 2. Ensure you have Python 3.10+ installed and create a virtual environment:
