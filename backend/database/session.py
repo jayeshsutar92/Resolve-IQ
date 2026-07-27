@@ -24,7 +24,11 @@ AsyncSessionFactory = async_sessionmaker(
 async def get_db_session():
     """
     Dependency to yield an async database session.
-    Automatically handles closing the session after the request.
+    Handles rollback on exception and ensures session closure.
     """
     async with AsyncSessionFactory() as session:
-        yield session
+        try:
+            yield session
+        except Exception:
+            await session.rollback()
+            raise
