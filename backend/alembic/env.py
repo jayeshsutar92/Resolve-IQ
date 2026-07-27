@@ -17,8 +17,8 @@ from models.risk_assessment import RiskAssessment
 # access to the values within the .ini file in use.
 config = context.config
 
-# Overwrite the sqlalchemy.url from our settings
-config.set_main_option("sqlalchemy.url", settings.database_url)
+# Overwrite the sqlalchemy.url from our settings (escape % for configparser compatibility)
+config.set_main_option("sqlalchemy.url", settings.database_url.replace("%", "%%"))
 
 # Interpret the config file for Python logging.
 # This line sets up loggers basically.
