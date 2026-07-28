@@ -1,8 +1,3 @@
-"""
-upload.py
-API endpoint for processing document uploads.
-"""
-
 from fastapi import APIRouter, Depends, UploadFile, File, HTTPException, status
 import pypdf
 from services.workflow_service import WorkflowService
@@ -16,9 +11,6 @@ async def upload_document(
     file: UploadFile = File(...),
     workflow_service: WorkflowService = Depends(get_workflow_service)
 ):
-    """
-    Accepts a PDF or text file, extracts text, and processes it as a complaint.
-    """
     if file.content_type not in ["application/pdf", "text/plain"]:
         raise HTTPException(status_code=status.HTTP_400_BAD_REQUEST, detail="Only PDF and TXT files are supported.")
         
