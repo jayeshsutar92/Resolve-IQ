@@ -1,8 +1,3 @@
-/**
- * main.tsx
- * React entry point wrapping the App in Redux Provider.
- */
-
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
