@@ -1,8 +1,3 @@
-"""
-risk_assessment.py
-Analyzes the extracted complaint data and generates a proportional, realistic risk assessment.
-"""
-
 import json
 from langchain_core.prompts import PromptTemplate
 from schemas.complaint import RiskAssessmentBase
@@ -13,9 +8,6 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 async def risk_assessment_node(state: WorkflowState) -> WorkflowState:
-    """
-    Evaluates the risk of the complaint based on extracted data, generating balanced and realistic recommendations.
-    """
     logger.info("Running risk_assessment_node")
     
     extracted_data = state.get("extracted_complaint_data")
@@ -39,7 +31,6 @@ async def risk_assessment_node(state: WorkflowState) -> WorkflowState:
         "COMPLAINT DETAILS:\n{data}"
     )
     
-    # Filter data for prompt to prevent LLM from echoing non-risk fields into tool parameters
     risk_input_data = {
         "issue_description": extracted_data.get("issue_description"),
         "complaint_type": extracted_data.get("complaint_type"),

@@ -1,8 +1,3 @@
-"""
-editing.py
-Applies edits to an existing complaint based on user instructions while preserving untouched fields.
-"""
-
 import json
 from langchain_core.prompts import PromptTemplate
 from schemas.complaint import ComplaintExtractionSchema
@@ -13,9 +8,6 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 async def editing_node(state: WorkflowState) -> WorkflowState:
-    """
-    Updates an existing complaint based on new user input while preserving existing fields.
-    """
     logger.info("Running editing_node")
     
     user_input = state.get("user_input")
@@ -58,7 +50,6 @@ async def editing_node(state: WorkflowState) -> WorkflowState:
         )
         updated_dict = updated_model.model_dump(exclude_unset=True)
         
-        # Merge updated fields over current dictionary to strictly guarantee non-mentioned fields are preserved
         merged_data = {**current_dict}
         for k, v in updated_dict.items():
             if v is not None or (k in user_input.lower() and ("remove" in user_input.lower() or "clear" in user_input.lower())):
