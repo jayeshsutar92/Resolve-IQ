@@ -1,8 +1,3 @@
-"""
-intent.py
-LangGraph node to detect the user's intent.
-"""
-
 from langchain_core.prompts import PromptTemplate
 from pydantic import BaseModel, Field as LCField
 from ai.llm import llm
@@ -15,9 +10,6 @@ class IntentDetection(BaseModel):
     intent: str = LCField(description="Must be 'log', 'edit', or 'upload'")
 
 async def detect_intent_node(state: WorkflowState) -> WorkflowState:
-    """
-    Detects intent based on input presence and content.
-    """
     logger.info("Running detect_intent_node")
     
     if state.get("document_text"):

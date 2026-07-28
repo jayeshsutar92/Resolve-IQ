@@ -1,8 +1,3 @@
-"""
-extraction.py
-Extracts complaint data from natural language into structured JSON.
-"""
-
 from langchain_core.prompts import PromptTemplate
 from schemas.complaint import ComplaintExtractionSchema
 from ai.llm import llm
@@ -12,9 +7,6 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 async def extraction_node(state: WorkflowState) -> WorkflowState:
-    """
-    Extracts complaint fields from user input.
-    """
     logger.info("Running extraction_node")
     user_input = state.get("user_input")
     

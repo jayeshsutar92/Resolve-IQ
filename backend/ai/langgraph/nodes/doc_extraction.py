@@ -1,8 +1,3 @@
-"""
-doc_extraction.py
-Extracts complaint data from uploaded document text.
-"""
-
 from langchain_core.prompts import PromptTemplate
 from schemas.complaint import ComplaintExtractionSchema
 from ai.llm import llm
@@ -12,9 +7,6 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 async def doc_extraction_node(state: WorkflowState) -> WorkflowState:
-    """
-    Extracts complaint fields from document text.
-    """
     logger.info("Running doc_extraction_node")
     
     doc_text = state.get("document_text")
