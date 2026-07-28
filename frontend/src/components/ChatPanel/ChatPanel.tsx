@@ -1,8 +1,3 @@
-/**
- * ChatPanel.tsx
- * The right panel containing the AI Copilot chat interface.
- */
-
 import React, { useState, useRef, useEffect } from 'react';
 import { Send, BotMessageSquare } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
@@ -19,7 +14,6 @@ const ChatPanel: React.FC = () => {
   const [input, setInput] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  // Auto-scroll to bottom of chat
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);

@@ -1,8 +1,3 @@
-/**
- * ChatMessage.tsx
- * Individual chat message bubble component.
- */
-
 import React from 'react';
 import { Bot, User } from 'lucide-react';
 import type { ChatMessage as IChatMessage } from '../../types';
