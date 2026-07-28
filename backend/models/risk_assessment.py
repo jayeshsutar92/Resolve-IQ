@@ -1,8 +1,3 @@
-"""
-risk_assessment.py
-SQLAlchemy model for representing AI-generated risk assessments for complaints.
-"""
-
 import uuid
 from typing import Optional
 from sqlalchemy import String, Text, ForeignKey
@@ -11,9 +6,6 @@ from sqlalchemy.dialects.postgresql import UUID
 from models.base import BaseModel
 
 class RiskAssessment(BaseModel):
-    """
-    Stores the LLM-generated risk assessment for a specific complaint.
-    """
     __tablename__ = "risk_assessments"
 
     complaint_id: Mapped[uuid.UUID] = mapped_column(
@@ -26,5 +18,4 @@ class RiskAssessment(BaseModel):
     reasoning: Mapped[str] = mapped_column(Text, nullable=False)
     recommended_action: Mapped[Optional[str]] = mapped_column(Text, nullable=True)
 
-    # Relationship back to Complaint
     complaint: Mapped["Complaint"] = relationship("Complaint", back_populates="risk_assessment")

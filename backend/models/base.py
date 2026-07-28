@@ -1,8 +1,3 @@
-"""
-base.py
-Defines the SQLAlchemy declarative base and common mixins (e.g., UUID primary keys, timestamps).
-"""
-
 import uuid
 from datetime import datetime, timezone
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
@@ -10,15 +5,9 @@ from sqlalchemy import DateTime
 from sqlalchemy.dialects.postgresql import UUID
 
 class Base(DeclarativeBase):
-    """
-    Base class for all SQLAlchemy models.
-    """
     pass
 
 class BaseModel(Base):
-    """
-    An abstract base model providing UUID primary keys and timestamp fields.
-    """
     __abstract__ = True
 
     id: Mapped[uuid.UUID] = mapped_column(
