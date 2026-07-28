@@ -1,15 +1,9 @@
-"""
-complaint.py
-Pydantic schemas for Complaint and Risk Assessment for validation and serialization.
-"""
-
 from pydantic import BaseModel, ConfigDict, Field
 from typing import Optional, Dict, Any
 from uuid import UUID
 from datetime import datetime
 
 class RiskAssessmentBase(BaseModel):
-    """Base schema for Risk Assessment"""
     severity: str = Field(description="Severity of the complaint (e.g., Low, Medium, High, Critical)")
     priority: str = Field(description="Priority for handling (e.g., P1, P2, P3)")
     risk_level: str = Field(description="Calculated overall risk level (e.g., Low, Medium, High)")
@@ -19,7 +13,6 @@ class RiskAssessmentBase(BaseModel):
     model_config = ConfigDict(extra="ignore")
 
 class RiskAssessmentResponse(RiskAssessmentBase):
-    """Schema for Risk Assessment returned to the client"""
     id: UUID
     complaint_id: UUID
     created_at: datetime
@@ -28,13 +21,11 @@ class RiskAssessmentResponse(RiskAssessmentBase):
     model_config = ConfigDict(from_attributes=True, extra="ignore")
 
 class ComplaintBase(BaseModel):
-    """Base schema for Complaint containing all extracted fields"""
     customer_name: Optional[str] = Field(default=None, description="Name of the customer or healthcare reporter")
     issue_description: Optional[str] = Field(default=None, description="Detailed description of the defect, issue, or adverse effect")
     product_or_service: Optional[str] = Field(default=None, description="Name of the product or service involved")
     date_of_incident: Optional[str] = Field(default=None, description="Date when the incident occurred")
     
-    # Extended fields
     product_strength: Optional[str] = Field(default=None, description="Strength or dosage of the product (e.g., 500mg, 10mg/ml)")
     batch_number: Optional[str] = Field(default=None, description="Lot or Batch number of the manufactured product")
     manufacturing_date: Optional[str] = Field(default=None, description="Date when the batch was manufactured")
@@ -49,7 +40,6 @@ class ComplaintBase(BaseModel):
     model_config = ConfigDict(extra="ignore")
 
 class ComplaintResponse(ComplaintBase):
-    """Schema for Complaint returned to the client"""
     id: UUID
     original_text: Optional[str] = None
     created_at: datetime
@@ -59,5 +49,4 @@ class ComplaintResponse(ComplaintBase):
     model_config = ConfigDict(from_attributes=True, extra="ignore")
 
 class ComplaintExtractionSchema(ComplaintBase):
-    """Schema used by LLM to output structured complaint data"""
     model_config = ConfigDict(extra="ignore")
