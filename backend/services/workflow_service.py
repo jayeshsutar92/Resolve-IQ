@@ -1,8 +1,3 @@
-"""
-workflow_service.py
-Service layer bridging API endpoints and the LangGraph AI workflow.
-"""
-
 import uuid
 from typing import Optional
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -17,17 +12,11 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 class WorkflowService:
-    """
-    Handles execution of the LangGraph workflow and coordinates with the database repository.
-    """
     def __init__(self, session: AsyncSession):
         self.repo = ComplaintRepository(session)
         self.session = session
 
     async def process_chat_message(self, message: str, complaint_id: Optional[uuid.UUID] = None) -> dict:
-        """
-        Executes the main chat workflow for logging or editing complaints.
-        """
         initial_state: WorkflowState = {
             "user_input": message,
             "document_text": None,
@@ -40,14 +29,12 @@ class WorkflowService:
             "current_complaint_record": None
         }
 
-        # If editing an existing complaint, fetch the current record first
         if complaint_id:
             record = await self.repo.get_by_id(complaint_id)
             if not record:
                 raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Complaint not found")
             initial_state["current_complaint_record"] = record
 
-        # Run LangGraph workflow
         final_state = await complaint_graph.ainvoke(initial_state)
 
         if final_state.get("error"):
@@ -59,9 +46,6 @@ class WorkflowService:
         return self._format_response(final_state)
 
     async def process_document(self, document_text: str) -> dict:
-        """
-        Executes the document extraction workflow.
-        """
         initial_state: WorkflowState = {
             "user_input": None,
             "document_text": document_text,
@@ -85,9 +69,6 @@ class WorkflowService:
         return self._format_response(final_state)
 
     def _format_response(self, state: WorkflowState) -> dict:
-        """
-        Formats the API response payload with a comprehensive summary message.
-        """
         intent = state.get("intent")
         saved_record = state.get("saved_complaint")
 
@@ -97,7 +78,6 @@ class WorkflowService:
                 detail="Failed to retrieve saved complaint record."
             )
 
-        # Build detailed informative AI message
         summary_lines = []
         if intent == "edit":
             summary_lines.append("I have updated the complaint with your specified changes:")

@@ -1,8 +1,3 @@
-"""
-exceptions.py
-Global exception handlers for the FastAPI application.
-"""
-
 from fastapi import FastAPI, Request, status
 from fastapi.responses import JSONResponse
 from utils.logger import get_logger
@@ -10,9 +5,6 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 def setup_exception_handlers(app: FastAPI):
-    """
-    Registers global exception handlers for the application.
-    """
     @app.exception_handler(Exception)
     async def global_exception_handler(request: Request, exc: Exception):
         logger.error(f"Unhandled exception: {exc}", exc_info=True)
