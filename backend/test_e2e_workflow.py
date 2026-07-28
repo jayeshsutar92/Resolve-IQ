@@ -1,11 +1,3 @@
-"""
-test_e2e_workflow.py
-End-to-end automated validation script testing:
-1. Log Complaint via natural language
-2. Edit Complaint via natural language (verifying untouched fields are preserved)
-3. Document Extraction via formal text/document string
-"""
-
 import asyncio
 from database.session import AsyncSessionFactory
 from services.workflow_service import WorkflowService
@@ -16,7 +8,6 @@ async def run_e2e_tests():
     async with AsyncSessionFactory() as session:
         service = WorkflowService(session)
         
-        # Test 1: Log Complaint
         print("\n--- Test 1: Log Complaint ---")
         log_msg = (
             "Customer Jane Smith reported an issue with Amoxicillin 500mg, Batch B-98765, "
@@ -39,7 +30,6 @@ async def run_e2e_tests():
         assert complaint1.id is not None
         complaint_id = complaint1.id
 
-        # Test 2: Edit Complaint (Update incident date & quantity without losing product/batch info)
         print("\n--- Test 2: Edit Complaint ---")
         edit_msg = "Correction: The date of incident was 2026-07-24 and actually 100 capsules were affected."
         res2 = await service.process_chat_message(edit_msg, complaint_id=complaint_id)
@@ -52,9 +42,8 @@ async def run_e2e_tests():
         print("PRESERVED Product Strength:", complaint2.product_strength)
         
         assert complaint2.date_of_incident == "2026-07-24"
-        assert complaint2.batch_number == "B-98765"  # Verified preserved
+        assert complaint2.batch_number == "B-98765"
 
-        # Test 3: Document Extraction
         print("\n--- Test 3: Document Extraction ---")
         doc_text = """
         FORMAL PHARMACEUTICAL QUALITY COMPLAINT FORM

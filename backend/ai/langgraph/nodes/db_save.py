@@ -1,8 +1,3 @@
-"""
-db_save.py
-LangGraph node for persisting complaint data and risk assessment into PostgreSQL.
-"""
-
 from ai.langgraph.state import WorkflowState
 from repositories.complaint_repo import ComplaintRepository
 from schemas.complaint import ComplaintBase, RiskAssessmentBase
@@ -11,9 +6,6 @@ from utils.logger import get_logger
 logger = get_logger(__name__)
 
 async def db_save_node(state: WorkflowState) -> WorkflowState:
-    """
-    Persists extracted complaint data and AI risk assessment to PostgreSQL and commits the transaction.
-    """
     logger.info("Running db_save_node")
     
     session = state.get("db_session")
@@ -44,10 +36,8 @@ async def db_save_node(state: WorkflowState) -> WorkflowState:
             risk_schema = RiskAssessmentBase(**risk_data)
             await repo.set_risk_assessment(complaint.id, risk_schema)
 
-        # Commit the transaction so data is persisted in PostgreSQL
         await session.commit()
 
-        # Re-fetch with joined risk assessment after commit
         updated_record = await repo.get_by_id(complaint.id)
         state["saved_complaint"] = updated_record
         logger.info(f"Successfully saved and committed complaint {complaint.id} to database.")
