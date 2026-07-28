@@ -36,7 +36,6 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-/* Layout */
 .app-container {
   display: flex;
   height: 100vh;
@@ -60,7 +59,6 @@ body {
   z-index: 10;
 }
 
-/* Card & Form Styles */
 .card {
   background-color: var(--surface-color);
   border-radius: var(--radius-lg);
@@ -106,7 +104,7 @@ body {
   color: var(--text-primary);
   font-family: 'Inter', sans-serif;
   font-size: 0.875rem;
-  pointer-events: none; /* Read only for users */
+  pointer-events: none;
 }
 
 textarea.form-input {
@@ -114,7 +112,6 @@ textarea.form-input {
   min-height: 80px;
 }
 
-/* Badges */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -128,7 +125,6 @@ textarea.form-input {
 .badge.medium { background-color: #fef3c7; color: #92400e; }
 .badge.high { background-color: #fee2e2; color: #991b1b; }
 
-/* Chat Styles */
 .chat-header {
   padding: 1.5rem;
   border-bottom: 1px solid var(--border-color);
@@ -228,7 +224,6 @@ textarea.form-input {
   cursor: not-allowed;
 }
 
-/* Document Upload */
 .upload-dropzone {
   border: 2px dashed var(--border-color);
   border-radius: var(--radius-md);
@@ -253,7 +248,6 @@ textarea.form-input {
   color: var(--text-secondary);
 }
 
-/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(10px); }
   to { opacity: 1; transform: translateY(0); }

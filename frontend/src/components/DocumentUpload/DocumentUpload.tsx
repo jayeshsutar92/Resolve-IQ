@@ -1,9 +1,3 @@
-/**
- * DocumentUpload.tsx
- * A component for uploading PDF/TXT documents via drag and drop.
- * Supports explicit loading animations and validation feedback.
- */
-
 import React, { useRef, useState } from 'react';
 import { UploadCloud, Loader2 } from 'lucide-react';
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks';
@@ -19,7 +13,7 @@ const DocumentUpload: React.FC = () => {
   const handleDrag = (e: React.DragEvent) => {
     e.preventDefault();
     e.stopPropagation();
-    if (e.type === 'dragenter' || e.type === 'dragover') {
+    if (e.type === 'dragenter' || e.type === 'dragleave') {
       setDragActive(true);
     } else if (e.type === 'dragleave') {
       setDragActive(false);

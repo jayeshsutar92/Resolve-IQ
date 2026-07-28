@@ -1,9 +1,3 @@
-/**
- * ComplaintPanel.tsx
- * Left panel displaying auto-populated structured complaint data and risk assessment.
- * Ensures null values are never displayed and gracefully formatted.
- */
-
 import React from 'react';
 import { FileText, AlertTriangle, Package, UserCheck, Loader2 } from 'lucide-react';
 import { useAppSelector } from '../../hooks/reduxHooks';
@@ -11,9 +5,6 @@ import { useAppSelector } from '../../hooks/reduxHooks';
 const ComplaintPanel: React.FC = () => {
   const { activeComplaint, isLoading, error } = useAppSelector((state) => state.complaint);
 
-  /**
-   * Safe value formatting helper - guarantees 'null' or 'undefined' is never shown to the user.
-   */
   const formatVal = (val?: string | null): string => {
     if (!val || val === 'null' || val === 'undefined') return '';
     return val;
@@ -46,7 +37,6 @@ const ComplaintPanel: React.FC = () => {
         </div>
       )}
 
-      {/* Loading Overlay */}
       {isLoading && (
         <div style={{
           backgroundColor: 'rgba(255, 255, 255, 0.85)',
@@ -66,7 +56,6 @@ const ComplaintPanel: React.FC = () => {
         </div>
       )}
 
-      {/* General Information Card */}
       <div className="card">
         <div className="card-title">
           <UserCheck size={20} color="var(--primary-color)" />
@@ -98,7 +87,6 @@ const ComplaintPanel: React.FC = () => {
         </div>
       </div>
 
-      {/* Product & Batch Details Card */}
       <div className="card">
         <div className="card-title">
           <Package size={20} color="var(--primary-color)" />
@@ -140,7 +128,6 @@ const ComplaintPanel: React.FC = () => {
         </div>
       </div>
 
-      {/* Incident & Issue Description Card */}
       <div className="card">
         <div className="card-title">
           <FileText size={20} color="var(--primary-color)" />
@@ -158,7 +145,6 @@ const ComplaintPanel: React.FC = () => {
         </div>
       </div>
 
-      {/* AI Risk Assessment Card */}
       <div className="card">
         <div className="card-title">
           <AlertTriangle size={20} color="#f59e0b" />
