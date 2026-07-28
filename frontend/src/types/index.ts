@@ -1,8 +1,3 @@
-/**
- * index.ts
- * TypeScript interfaces mirroring the backend schemas.
- */
-
 export interface RiskAssessment {
   id: string;
   complaint_id: string;
