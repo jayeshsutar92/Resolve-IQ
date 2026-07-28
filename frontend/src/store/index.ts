@@ -1,8 +1,3 @@
-/**
- * index.ts
- * Configures the Redux store.
- */
-
 import { configureStore } from '@reduxjs/toolkit';
 import complaintReducer from './slices/complaintSlice';
 import chatReducer from './slices/chatSlice';

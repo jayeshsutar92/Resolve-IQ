@@ -1,8 +1,3 @@
-/**
- * complaintSlice.ts
- * Redux slice managing the active complaint's data.
- */
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { Complaint, ChatRequest } from '../../types';
 import { apiService } from '../../services/api';
@@ -19,9 +14,6 @@ const initialState: ComplaintState = {
   error: null,
 };
 
-/**
- * Async thunk for logging or editing a complaint via chat.
- */
 export const processChatAction = createAsyncThunk(
   'complaint/processChat',
   async (request: ChatRequest, { rejectWithValue }) => {
@@ -34,9 +26,6 @@ export const processChatAction = createAsyncThunk(
   }
 );
 
-/**
- * Async thunk for uploading a document.
- */
 export const uploadDocumentAction = createAsyncThunk(
   'complaint/uploadDocument',
   async (file: File, { rejectWithValue }) => {
@@ -58,7 +47,6 @@ const complaintSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Process Chat
     builder.addCase(processChatAction.pending, (state) => {
       state.isLoading = true;
       state.error = null;
@@ -74,7 +62,6 @@ const complaintSlice = createSlice({
       state.error = action.payload as string;
     });
 
-    // Upload Document
     builder.addCase(uploadDocumentAction.pending, (state) => {
       state.isLoading = true;
       state.error = null;

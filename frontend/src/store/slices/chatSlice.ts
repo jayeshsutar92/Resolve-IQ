@@ -1,8 +1,3 @@
-/**
- * chatSlice.ts
- * Redux slice managing the chat messages history.
- */
-
 import { createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import type { ChatMessage } from '../../types';
@@ -46,7 +41,6 @@ const chatSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    // Automatically add AI's response message when chat processing is successful
     builder.addCase(processChatAction.fulfilled, (state, action) => {
       state.messages.push({
         id: uuidv4(),
@@ -56,7 +50,6 @@ const chatSlice = createSlice({
       });
     });
 
-    // Automatically add AI's response message when document upload is successful
     builder.addCase(uploadDocumentAction.fulfilled, (state, action) => {
       state.messages.push({
         id: uuidv4(),
