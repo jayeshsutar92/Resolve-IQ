@@ -1,8 +1,3 @@
-"""
-graph.py
-Orchestrates the LangGraph workflow for complaint processing.
-"""
-
 from langgraph.graph import StateGraph, END
 from ai.langgraph.state import WorkflowState
 from ai.langgraph.nodes.intent import detect_intent_node
@@ -13,7 +8,6 @@ from ai.langgraph.nodes.risk_assessment import risk_assessment_node
 from ai.langgraph.nodes.db_save import db_save_node
 
 def route_by_intent(state: WorkflowState) -> str:
-    """Routes to the appropriate extraction node based on intent."""
     if state.get("error"):
         return END
         
@@ -27,12 +21,8 @@ def route_by_intent(state: WorkflowState) -> str:
     return "extract"
 
 def build_graph() -> StateGraph:
-    """
-    Builds and compiles the LangGraph workflow.
-    """
     workflow = StateGraph(WorkflowState)
     
-    # Add separate nodes for each workflow stage
     workflow.add_node("detect_intent", detect_intent_node)
     workflow.add_node("extract", extraction_node)
     workflow.add_node("edit", editing_node)
@@ -40,7 +30,6 @@ def build_graph() -> StateGraph:
     workflow.add_node("assess_risk", risk_assessment_node)
     workflow.add_node("save_db", db_save_node)
     
-    # Define workflow edges
     workflow.set_entry_point("detect_intent")
     
     workflow.add_conditional_edges(
@@ -62,5 +51,4 @@ def build_graph() -> StateGraph:
     
     return workflow.compile()
 
-# Pre-compiled graph instance
 complaint_graph = build_graph()
